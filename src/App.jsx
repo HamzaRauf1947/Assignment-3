@@ -1,11 +1,4 @@
-
-
-
-
-
-
-
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function App() {
   const [pName, setPName] = useState('');
@@ -24,17 +17,20 @@ function App() {
       stock,
     };
 
-    setProducts([...products, newProduct]);
+    // Use functional update to ensure you're working with the latest state
+    setProducts((prevProducts) => [...prevProducts, newProduct]);
 
     // Clear input fields
     setPName('');
     setDescription('');
     setQuantity('');
     setStock('');
-
-    console.log(products);
-    
   };
+
+  // Log products after the state has been updated
+  useEffect(() => {
+    console.log(products);
+  }, [products]); // This will run whenever `products` changes
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center p-6">
